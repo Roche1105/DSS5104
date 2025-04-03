@@ -1,0 +1,11 @@
+Basic Check: 
+1. No Missing Value
+2. Unique Values Check: 
+    column 'country' only USA; 
+    column 'view' value from 0-4
+    column 'condition' value from 1-5
+    column 'waterfront' value 0 or 1
+    column 'city' covers 44 different cities in Washington state
+    column 'statezip' covers 77 different zip code in Washington
+
+Visualization on Geospatial Data
