@@ -1,0 +1,64 @@
+Basic Check: 
+1. No Missing Value
+2. Unique Values Check: 
+    column 'country' only USA; 
+    column 'view' value from 0-4
+    column 'condition' value from 1-5
+    column 'waterfront' value 0 or 1
+    column 'city' covers 44 different cities in Washington state
+    column 'statezip' covers 77 different zip code in Washington
+3. Drop unnecessary columns: date, counrty
+
+EDA
+1. Distribution(skewness) Check:
+    a.  Wide Ranges / Different Magnitudes
+        •	Features like price, sqft_lot, and sqft_living span large ranges.
+        •	Solution: Use scaling (e.g., StandardScaler, MinMaxScaler) so that no single feature dominates due to its magnitude.
+	b.	Skewed Distributions
+        •	Features like price, sqft_lot, sqft_basement are right-skewed.
+        •	Solution: Apply log transformation or Box-Cox to normalize them and improve model performance.
+	c.	Spikes at Zero
+        •	Features like sqft_basement, yr_renovated, and waterfront spike at 0.
+        •	Solution: Create binary indicator columns
+2. Correlation Check:
+    •	Most features affect price positively with sqft_living showing the strongest positive relationship
+    •	Only "yr_renovated" shows a negative relationship with price
+    •	From correlation matrix plot, top 6 features are sqft_living, sqft_above, bathrooms, view, sqft_basement, bedrooms; but the top 2 are highly correlated
+    •	There seems to be a slight relationship between price and most of the categorical variables
+3. Visualization on geospacial data
+    Maybe consider create a numerical variable to capture this feature; maybe not, since the correlation matrix shows no significant relationship with price
+
+
+Feature Engineering
+1. Outliers: price = 0, 3 extreme values, 50% duplicated rows
+2. Categorical Variables:
+    •	zero value in sqft_basement could indicate the absence of a basement, which shows it can explain physically. And at the same time, indicator variable can avoid multiple covariance.
+    •	for yr_renovated, it could mean that a house was not renovated.
+3. Geospatial Variables:
+    a. [regions]According to Wikipedia, the first digit of a zip code represents the state ('9' corresponds to Washington), the second and third digits represent the region (or perhaps a large city) while the last two digits represent the the area of the city(for metropolitan areas) or a village/town (outside metro areas).
+        •	'80':'1','81':'2','82':'3','83':'4'
+        •	80 — Central/Eastern Colorado (Denver, Boulder, Fort Collins)
+        •	81 — Western/Southern Colorado (Durango, Grand Junction)
+        •	82 — All of Nebraska (Omaha, Lincoln, Kearney)
+        •	83 — Both Dakotas (Bismarck, Fargo, Sioux Falls)
+    b. [quadrant]Washington use quadrants to divide their street grid. These quadrants can be very meaningful. eg:NW — Northwest
+    c. [road_type]
+        •	'Rd': ['Rd', 'Road'],
+        •	'Way': ['Way'],
+        •	'St': ['St', 'Street'],
+        •	'Ave': ['Ave', 'Avenue'],
+        •	'Blvd': ['Blvd', 'Boulevard'],
+        •	'Ln': ['Ln', 'Lane'],
+        •	'Dr': ['Dr', 'Drive'],
+        •	'Pl': ['Pl', 'Place'],
+        •	'Ct': ['Ct', 'Court'],
+        •	'Pkwy': ['Pkwy', 'Parkway'],
+        •	'Hwy': ['Hwy'],
+        •	'Terrace': ['Terrace'],
+        •	'Trail': ['Trail'],
+        •	'Cir': ['Cir'],
+        •	'Walk': ['Walk'],
+        •	'Key': ['Key']
+4. Variables based on reality:
+    ['total_rooms'],['total_space'],['totspace/room'],['facilities'],['score']
+5. All Variables(14 numerical +10 categorical)
